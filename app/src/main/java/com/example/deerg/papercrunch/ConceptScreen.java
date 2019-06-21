@@ -124,6 +124,22 @@ public class ConceptScreen extends AppCompatActivity {
             }
         });
 
+        mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                if(groupPosition==0 || groupPosition==1)
+                {
+                    mExpandableListView.expandGroup(groupPosition);
+                }
+                else if(groupPosition==6)
+                {
+                    Intent i=new Intent(mContext,settings.class);
+                    startActivity(i);
+                }
+                return true;
+            }
+        });
+
         vp=findViewById(R.id.vp_concept);
         adapter=new SliderFragmentAdapter(getSupportFragmentManager());
         vp.setAdapter(adapter);

@@ -134,7 +134,28 @@ public class SubLevel extends AppCompatActivity {
                     intent.putExtra("id",childPosition+1);
                     mContext.startActivity(intent);
                 }
+                if(groupPosition==6)
+                {
+                    Intent i=new Intent(mContext,settings.class);
+                    startActivity(i);
+                }
                 finish();
+                return true;
+            }
+        });
+
+        mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                if(groupPosition==0 || groupPosition==1)
+                {
+                    mExpandableListView.expandGroup(groupPosition);
+                }
+                else if(groupPosition==6)
+                {
+                    Intent i=new Intent(mContext,settings.class);
+                    startActivity(i);
+                }
                 return true;
             }
         });

@@ -1,35 +1,25 @@
 package com.example.deerg.papercrunch;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.DataSetObserver;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Main2Activity extends AppCompatActivity {
+public class settings extends AppCompatActivity {
 
     android.support.v7.widget.Toolbar custom_toolbar;
     DrawerLayout mDrawerLayout;
@@ -39,38 +29,12 @@ public class Main2Activity extends AppCompatActivity {
     ExpandableListAdapter mExpandableListAdapter;
     List<String> listheader;
     HashMap<String, List<String>> listchild;
-    private ExpandableListView listView;
-    private aExpandableListAdapter listAdapter;
-    private List<String> listDataHeader;
-    private HashMap<String, List<String>> listHash;
-    private ProgressBar progressBar;
-    private Object LevelDbHelper;
-    //SQLiteDatabase datavase;
-    MainActivity one;
-    public static List<CardData> card1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_settings);
         setuptoolbar();
-
-        card1 = new ArrayList<>();
-        card1.add(new CardData("Level 1", "Introduction", "25%", R.drawable.ic_content_paste_black_24dp, 1));
-        card1.add(new CardData("Level 2", "Data Types and Variables", "25%", R.drawable.ic_date_range_black_24dp, 2));
-        card1.add(new CardData("Level 3", "Operators", "25%", R.drawable.ic_developer_mode_black_24dp, 3));
-        card1.add(new CardData("Level 4", "Input/Output", "25%", R.drawable.ic_input_black_24dp, 4));
-        card1.add(new CardData("Level 5", "Logical Operators", "25%", R.drawable.logic, 5));
-        card1.add(new CardData("Level 6", "Conditional Statements", "25%", R.drawable.ic_swap_horiz_black_24dp, 6));
-        card1.add(new CardData("Level 7", "Loops", "25%", R.drawable.ic_loop_black_24dp, 7));
-        card1.add(new CardData("Level 8", "Functions", "25%", R.drawable.ic_functions_black_24dp, 8));
-        card1.add(new CardData("Level 9", "Arrays and Strings", "25%", R.drawable.ic_view_array_black_24dp, 9));
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        RecyclerAdapter myAdap = new RecyclerAdapter(this, card1);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recyclerView.setAdapter(myAdap);
 
     }
 
@@ -104,23 +68,17 @@ public class Main2Activity extends AppCompatActivity {
         mActionBarDrawerToggle.syncState();
         navigationView.setItemIconTintList(null);
 
-        mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+        mExpandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            int previousGroup = -1;
+
             @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                if(groupPosition==0 || groupPosition==1)
-                {
-                    mExpandableListView.expandGroup(groupPosition);
-                }
-                else if(groupPosition==6)
-                {
-                    Intent i=new Intent(Main2Activity.this,settings.class);
-                    startActivity(i);
-                }
-                return true;
+            public void onGroupExpand(int groupPosition) {
+                if (groupPosition != previousGroup)
+                    mExpandableListView.collapseGroup(previousGroup);
+                previousGroup = groupPosition;
             }
         });
     }
-
     private void prepareData() {
         listheader = new ArrayList<String>();
         listchild = new HashMap<String, List<String>>();
